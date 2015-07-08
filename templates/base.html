@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css"  media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>{% block title %}Picha!{% endblock %}</title>
+    {% block headcss %}{% endblock %}
+  </head>
+  <body>
+    <div class="container">
+      <div class="section">
+        <div class="row">
+          <div class="col s9"><a href="{% url 'feedback' %}"><h3>Picha!</h3></a></div>
+          <div class="col s3">
+            <button data-target="feedback-modal" class="waves-effect waves-light btn modal-trigger">Got Feedback?</button>
+          </div>
+        </div>
+        <div>
+          <div id="feedback-modal" class="modal">
+            <div class="modal-content">
+              <h4>We <3 feedback</h4>
+              <form action="{% url 'feedback' %}" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                  <i class="mdi-content-send right"></i>
+                </button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+          </div>
+        </div>
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+    {% block extrabody %}{% endblock %}
+  </body>
+</html>
