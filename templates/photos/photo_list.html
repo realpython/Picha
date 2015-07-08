@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Picha!{% endblock %}
+
+{% block headcss %}
+  <style>
+    .card-image {
+      height:200px;
+    }
+    .linkable {
+      cursor: pointer;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="images row">
+    {% for photo in photo_list %}
+      <div class="col s4">
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="{{photo.image_url}}" alt="{{photo.title}}">
+          </div>
+          <div class="card-content">
+            <span class="card-title grey-text text-darken-4"> <a href="{{photo.link}}" title="link to photo"><i class="mdi-content-link left waves-light" title="Link to photo"></i></a> <i class="mdi-navigation-more-vert right activator linkable" title="More details"></i></span>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">{{photo.title}} <i class="mdi-navigation-close right"></i></span>
+            {{photo.description|safe}}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="row">
+    <div class="col s12">
+      {% if is_paginated %}
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li class="waves-effect">
+              <a href="?page={{ page_obj.previous_page_number }}{{ getvars }}{{ hashtag }}"><i class="mdi-navigation-chevron-left"></i></a>
+            </li>
+          {% else %}
+            <li class="disabled"><a href="#!"><i class="mdi-navigation-chevron-left"></i></a></li>
+          {% endif %}
+          <li class="active">
+          <a href="#!">{{ page_obj.number }}</a>
+          </li>
+          {% if page_obj.has_next %}
+            <li class="waves-effect">
+              <a href="?page={{ page_obj.next_page_number }}{{ getvars }}{{ hashtag }}"><i class="mdi-navigation-chevron-right"></i></a>
+            </li>
+          {% else %}
+            <li class="waves-effect"><a href="#!"><i class="mdi-navigation-chevron-right"></i></a></li>
+          {% endif %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block extrabody %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.modal-trigger').leanModal();
+    });
+  </script>
+{% endblock %}
